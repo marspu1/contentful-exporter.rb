@@ -1,0 +1,6 @@
+#PATH to data dump folder
+data_dir: PATH_TO_ALL_DATA
+
+#Contentful credentials - Define before exporting data from Contentful.
+access_token: ACCESS_TOKEN
+space_id: DEFINE_SPACE_ID_BEFORE_EXPORT
