@@ -171,52 +171,9 @@ module Contentful
         end
       end
 
-      def export_status(entry, file_path, log_file)
-        if entry.is_a? Contentful::Management::Entry
-          entry_file_name = File.basename(file_path)
-          logger.info 'exported successfully!'
-          CSV.open("#{config.log_files_dir}/#{log_file}.csv", 'a') { |csv| csv << [entry_file_name] }
-        else
-          logger.info "### Failure! - #{entry.message}  - #{entry.response.raw}###"
-          failure_filename = log_file.match(/(thread_\d)/)[1]
-          CSV.open("#{config.log_files_dir}/failure_#{failure_filename}.csv", 'a') { |csv| csv << [file_path, entry.message, entry.response.raw] }
-        end
-      end
-
       def content_type(content_type_id, space_id)
         @content_type = APICache.get("content_type_#{content_type_id}", :period => -5) do
           Contentful::Management::ContentType.find(space_id, content_type_id)
-        end
-      end
-
-      def create_entry(params, space_id, content_type_id)
-        entry_id = get_id(params)
-        content_type = content_type(content_type_id, space_id)
-        content_type.entries.new.tap do |entry|
-          entry.id = entry_id
-        end
-      end
-
-      def create_asset(space_id, params)
-        if params['id']
-          space = Contentful::Management::Space.find(space_id)
-          found_asset = space.assets.find(params['id'])
-          asset = found_asset.is_a?(Contentful::Management::Asset) ? found_asset : initialize_asset_file(params)
-          asset
-        end
-      end
-
-      def initialize_asset_file(params)
-        Contentful::Management::Asset.new.tap do |asset|
-          asset.id = params['id']
-          asset.link_type = 'Asset'
-        end
-      end
-
-      def create_location_file(params)
-        Contentful::Management::Location.new.tap do |file|
-          file.lat = params['lat']
-          file.lon = params['lng']
         end
       end
 
