@@ -127,8 +127,9 @@ module Contentful
         entry_params = {:id => entry.sys[:id]}
         entry_params.merge!(create_entry_parameters(entry))
         content_type_id = entry.sys[:contentType].sys[:id]
+        content_type = content_type(content_type_id, @space.sys[:id])
 
-        dirname = File.join(@config.entries_dir, content_type_id)
+        dirname = File.join(@config.entries_dir, content_type.properties[:name])
         create_directory(dirname)
 
         entry_path = File.join(dirname, entry_params[:id] + '.json')
