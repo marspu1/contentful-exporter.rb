@@ -15,7 +15,7 @@ module Contentful
       def run(action, options = {})
         case action.to_s
           when '--export'
-            exporter.export_data(options[:threads])
+            exporter.export_data
           when '--export-content-types'
             exporter.export_content_types
           when '--export-assets'

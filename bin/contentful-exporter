@@ -15,9 +15,9 @@ Escort::App.create do |app|
     app.command '--export-content-types' do |command|
       command.summary 'Find an existing Space or create new one. Export content types from Contentful platform'
       command.requires_arguments false
-      command.options do |opts|
-        opts.opt :space_id, 'space_id', short: '-s', long: '--space_id', type: :string
-        opts.opt :space_name, 'space_name', short: :none, long: '--space_name', type: :string
+      command.options do |options|
+        options.opt :space_id, 'space_id', short: '-s', long: '--space_id', type: :string
+        options.opt :space_name, 'space_name', short: :none, long: '--space_name', type: :string
       end
       command.action do |options, arguments|
         Contentful::Exporter::CLI.new(options, arguments).execute
@@ -25,16 +25,6 @@ Escort::App.create do |app|
     end
     app.command '--export' do |command|
       command.summary 'Export entries from the Contentful platform'
-      command.options do |opts|
-        opts.opt :threads, 'threads', short: '-t', long: '--threads', type: :integer, default: 1
-        opts.validate(:threads, 'argument must be set to 1 or 2 exclusive. ') { |option| option > 0 && option <= 2 }
-      end
-      command.action do |options, arguments|
-        Contentful::Exporter::CLI.new(options, arguments).execute
-      end
-    end
-    app.command '--test-credentials' do |command|
-      command.summary 'Check your Contentful-management credentials'
       command.action do |options, arguments|
         Contentful::Exporter::CLI.new(options, arguments).execute
       end
@@ -51,8 +41,8 @@ Escort::App.create do |app|
         Contentful::Exporter::CLI.new(options, arguments).execute
       end
     end
-    app.command '--validate-schema' do |command|
-      command.summary 'Validate entries JSON schema'
+    app.command '--test-credentials' do |command|
+      command.summary 'Check your Contentful-management credentials'
       command.action do |options, arguments|
         Contentful::Exporter::CLI.new(options, arguments).execute
       end

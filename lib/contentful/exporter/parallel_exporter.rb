@@ -32,10 +32,10 @@ module Contentful
         @space.content_types.all.each { |ct| export_content_type(ct) }
       end
 
-      def export_data(threads)
-        clean_threads_dir_before_export(threads)
-        data_organizer.execute(threads)
-        export_in_threads
+      def export_data
+        export_content_types
+        export_entries
+        export_assets
       end
 
       def test_credentials
@@ -45,26 +45,6 @@ module Contentful
         end
       rescue NoMethodError => _error
         logger.info 'Contentful Management API credentials: INVALID (check README)'
-      end
-
-      def number_of_threads
-        number_of_threads = 0
-        Dir.glob("#{config.threads_dir}/*") do |thread|
-          number_of_threads += 1 if File.basename(thread).size == 1
-        end
-        number_of_threads
-      end
-
-      def export_in_threads
-        threads = []
-        number_of_threads.times do |thread_id|
-          threads << Thread.new do
-            self.class.new(config).export_entries("#{config.threads_dir}/#{thread_id}", config.space_id)
-          end
-        end
-        threads.each do |thread|
-          thread.join
-        end
       end
 
       def export_entries
@@ -87,14 +67,6 @@ module Contentful
         create_asset_json_file(asset_title, asset)
       end
 
-      def asset_url_param_start_with_http?(asset_attributes)
-        asset_attributes['url'] && asset_attributes['url'].start_with?('http')
-      end
-
-      def asset_not_exported_yet?(asset_attributes, assets_ids)
-        !assets_ids.to_a.flatten.include?(asset_attributes['id'])
-      end
-
       def create_asset_json_file(asset_title, asset)
         asset_params = {
           :id => asset.sys[:id],
@@ -115,32 +87,6 @@ module Contentful
             file.puts f.read
           end
         }
-      end
-
-      def publish_entries_in_threads
-        threads =[]
-        number_of_threads.times do |thread_id|
-          threads << Thread.new do
-            self.class.new(config).publish_all_entries("#{config.threads_dir}/#{thread_id}")
-          end
-        end
-        threads.each do |thread|
-          thread.join
-        end
-      end
-
-      def publish_assets_in_threads(number_of_threads)
-        clean_assets_threads_dir_before_publish(number_of_threads)
-        data_organizer.split_assets_to_threads(number_of_threads)
-        threads =[]
-        number_of_threads.times do |thread_id|
-          threads << Thread.new do
-            self.class.new(config).publish_assets("#{config.threads_dir}/assets/#{thread_id}")
-          end
-        end
-        threads.each do |thread|
-          thread.join
-        end
       end
 
       private
