@@ -26,6 +26,12 @@ module Contentful
         end
       end
 
+      it 'export all from Contentful' do
+        vcr('export') do
+          Migrator.new(@setting_file).run('--export')
+        end
+      end
+
       context 'test credentials' do
         it 'when valid' do
           vcr('valid_credentials') do
