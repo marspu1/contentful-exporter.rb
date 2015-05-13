@@ -92,6 +92,7 @@ module Contentful
       private
 
       def export_content_type(content_type)
+        logger.info "export content type - #{content_type.sys[:id]}"
         dirname = @config.collections_dir
         create_directory(dirname)
         ct_path = File.join(dirname, content_type.properties[:name] + '.json')
@@ -122,8 +123,7 @@ module Contentful
       end
 
       def export_entry(entry)
-        #entry_attributes = JSON.parse(File.read(file_path))
-        #logger.info "Creating entry: #{entry_attributes['id']}."
+        logger.info "export entry - #{entry.sys[:id]}"
         entry_params = {:id => entry.sys[:id]}
         entry_params.merge!(create_entry_parameters(entry))
         content_type_id = entry.sys[:contentType].sys[:id]
