@@ -162,19 +162,23 @@ module Contentful
       end
 
       def parse_attributes_from_hash(params)
-        return {
-          :id => params['sys']['id'],
-          :type => 'Link',
-        }
+        attrs = {:id => params['sys']['id']}
+        type = params['sys']['linkType']
+        if type
+          case type
+          when 'Asset'
+            attrs[:type] = 'File'
+          else
+            attrs[:type] = 'Link'
+          end
+        end
+        attrs
       end
 
       def parse_attributes_from_array(params)
         params.each_with_object([]) do |attr, array_attributes|
-          if attr['sys'].present?
-            array_attributes << {
-              :id => attr['sys']['id'],
-              :type => 'Link',
-            }
+          if attr.is_a? Hash
+            array_attributes << parse_attributes_from_hash(attr)
           else
             array_attributes << attr
           end
@@ -194,7 +198,6 @@ module Contentful
           :required => field.properties[:required],
         }
         field_params.merge!(additional_field_params(field))
-        #logger.info "Creating field: #{field_params[:type]}"
         return field_params
       end
 
@@ -211,21 +214,18 @@ module Contentful
 
       def additional_field_params(field)
         field_type = field.properties[:type]
-        if field_type == 'Entry' || field_type == 'Asset'
-          {type: 'Link', link_type: field_type}
+        if field_type == 'Link'
+          {:link => 'Link', :type => field.properties[:linkType]}
         elsif field_type == 'Array'
-          {type: 'Array', items: create_array_field(field)}
+          params = {:type => 'Array'}
+          params[:link] = field.properties[:items].properties[:type] || 'Link'
+          if params[:link] == 'Link'
+            params[:link_type] = field.properties[:items].properties[:linkType]
+          end
+          params
         else
-          {type: field_type}
+          {:type => field_type}
         end
-      end
-
-      def create_array_field(params)
-        json = {
-          :type => params.properties[:items].properties[:type] || 'Link',
-          :link_type => params.properties[:items].properties[:linkType],
-        }
-        return json
       end
 
       def create_directory(path)
