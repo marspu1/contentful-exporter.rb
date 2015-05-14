@@ -62,19 +62,25 @@ module Contentful
 
       def export_asset(asset)
         logger.info "export asset - #{asset.sys[:id]}"
+
         asset_title = asset.sys[:id]
+
+        dirname = @config.assets_dir
+        num = Dir[dirname + '/*'].count
+        filename = num.to_s + '.json'
+        filepath = File.join(dirname, filename)
+
         create_asset_file(asset_title, asset)
-        create_asset_json_file(asset_title, asset)
+        create_asset_json_file(filepath, asset)
       end
 
-      def create_asset_json_file(asset_title, asset)
+      def create_asset_json_file(filepath, asset)
         asset_params = {
           :id => asset.sys[:id],
           :title => asset.fields[:title],
           :description => asset.fields[:description],
         }
-        asset_json_path = File.join(@config.assets_dir, asset.sys[:id] + '.json')
-        File.open(asset_json_path, 'w') do |file|
+        File.open(filepath, 'w') do |file|
           file.write(JSON.pretty_generate(asset_params))
         end
       end
@@ -132,7 +138,10 @@ module Contentful
         dirname = File.join(@config.entries_dir, content_type.properties[:name])
         create_directory(dirname)
 
-        entry_path = File.join(dirname, entry_params[:id] + '.json')
+        num = Dir[dirname + '/*'].count
+        filename = num.to_s + '.json'
+
+        entry_path = File.join(dirname, filename)
         entry_file = File.open(entry_path, 'w')
         entry_json = JSON.pretty_generate(entry_params)
         entry_file.write(entry_json)
