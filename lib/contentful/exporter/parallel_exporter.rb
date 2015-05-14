@@ -79,6 +79,7 @@ module Contentful
           :id => asset.sys[:id],
           :title => asset.fields[:title],
           :description => asset.fields[:description],
+          :url => 'http://i.imgur.com/Q4KPsIp.jpg',
         }
         File.open(filepath, 'w') do |file|
           file.write(JSON.pretty_generate(asset_params))
