@@ -1,3 +1,6 @@
-data_dir: data/
+data_dir: contentful/data/
+space_id: ioe5ktfzxnxe
 access_token: <ACCESS_TOKEN>
-space_id: tyftcdahhwh8
+
+import_space_id: mawgtyv86jwo
+import_access_token: <ACCESS_TOKEN>

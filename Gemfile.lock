@@ -25,6 +25,15 @@ GEM
     byebug (4.0.5)
       columnize (= 0.9.0)
     columnize (0.9.0)
+    contentful-importer (0.1.1)
+      activesupport (~> 4.1)
+      api_cache (~> 0.3.0)
+      contentful-management (~> 0.7.0)
+      escort (~> 0.4.0)
+      http (~> 0.6)
+      i18n (~> 0.6)
+      json-schema (~> 2.5.0)
+      multi_json (~> 1)
     contentful-management (0.7.0)
       http (~> 0.6)
       multi_json (~> 1)
@@ -93,6 +102,7 @@ DEPENDENCIES
   bundler (~> 1.6)
   byebug
   contentful-exporter!
+  contentful-importer
   rake
   rspec (~> 3)
   rspec-its (~> 1.1.0)
