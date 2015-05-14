@@ -107,7 +107,7 @@ module Contentful
           :id => content_type.sys[:id],
           :name => content_type.properties[:name],
           :description => content_type.properties[:properties],
-          :displayField => '',
+          :displayField => content_type.properties[:displayField],
           :fields => create_content_type_fields(content_type),
         }
       end
