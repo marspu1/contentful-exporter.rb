@@ -63,15 +63,13 @@ module Contentful
       def export_asset(asset)
         logger.info "export asset - #{asset.sys[:id]}"
 
-        asset_title = asset.sys[:id]
+        json_dirname = @config.assets_dir
+        num = Dir[json_dirname + '/*'].count
+        json_filename = num.to_s + '.json'
+        json_filepath = File.join(json_dirname, json_filename)
 
-        dirname = @config.assets_dir
-        num = Dir[dirname + '/*'].count
-        filename = num.to_s + '.json'
-        filepath = File.join(dirname, filename)
-
-        create_asset_file(asset_title, asset)
-        create_asset_json_file(filepath, asset)
+        create_asset_file(asset)
+        create_asset_json_file(json_filepath, asset)
       end
 
       def create_asset_json_file(filepath, asset)
