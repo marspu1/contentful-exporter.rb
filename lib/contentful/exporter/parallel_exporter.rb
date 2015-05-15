@@ -156,7 +156,13 @@ module Contentful
 
       def create_entry_parameters(entry)
         entry.fields.each_with_object({}) do |(attr, value), entry_params|
-          entry_param = if value.is_a? Hash
+          entry_param = if value.is_a? Contentful::Management::Location
+                          {
+                            :type => 'Location',
+                            :lat => value.properties[:lat],
+                            :lon => value.properties[:lon]
+                          }
+                        elsif value.is_a? Hash
                           parse_attributes_from_hash(value)
                         elsif value.is_a? Array
                           parse_attributes_from_array(value)
