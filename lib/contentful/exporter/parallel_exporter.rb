@@ -77,16 +77,24 @@ module Contentful
           :id => asset.sys[:id],
           :title => asset.fields[:title],
           :description => asset.fields[:description],
-          :url => 'http://i.imgur.com/Q4KPsIp.jpg',
         }
+        filename = asset_file_name(asset)
+        asset_params[:url] = filename if filename
+
         File.open(filepath, 'w') do |file|
           file.write(JSON.pretty_generate(asset_params))
         end
       end
 
-      def create_asset_file(asset_title, asset)
+      def asset_file_name(asset)
+        return nil if !asset.file
+        asset.file.properties[:fileName]
+      end
+
+      def create_asset_file(asset)
+
         dirname = @config.assets_dir
-        asset_path = File.join(dirname, 'files', asset_title)
+        asset_path = File.join(dirname, 'files', filename)
         open('http:' + asset.fields[:file].properties[:url]) {|f|
           File.open(asset_path, 'wb') do |file|
             file.puts f.read
