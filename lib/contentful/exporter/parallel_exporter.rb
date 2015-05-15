@@ -48,14 +48,14 @@ module Contentful
       end
 
       def export_entries
-        @space.entries.all.each do |entry|
+        @space.entries.all({:limit => 1000}).each do |entry|
           export_entry(entry)
         end
       end
 
       def export_assets
         create_directory(File.join(@config.assets_dir, 'files'))
-        @space.assets.all.each do |asset|
+        @space.assets.all({:limit => 1000}).each do |asset|
           export_asset(asset)
         end
       end
