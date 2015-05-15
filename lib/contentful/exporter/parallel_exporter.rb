@@ -210,9 +210,19 @@ module Contentful
           :required => field.properties[:required],
         }
         field_params.merge!(additional_field_params(field))
+        validations = field_validations(field)
+        field_params[:validations] = validations if validations != []
         return field_params
       end
 
+      def field_validations(field)
+        if !field.validations.is_a? Array
+          []
+        else
+          field.validations.each_with_object([]) do |validation, validations|
+             type, params = validation.properties.find {|k,v| ![nil, "", false].include?(v) and k != :validations}
+             validations << {:type => type, :params => params}
+          end
         end
       end
 
