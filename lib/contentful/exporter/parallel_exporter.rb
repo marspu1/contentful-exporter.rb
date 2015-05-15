@@ -213,14 +213,6 @@ module Contentful
         return field_params
       end
 
-      def create_content_type_field(field_params)
-        Contentful::Management::Field.new.tap do |field|
-          field.id = field_params[:id]
-          field.name = field_params[:name]
-          field.type = field_params[:type]
-          field.link_type = field_params[:link_type]
-          field.required = field_params[:required]
-          field.items = field_params[:items]
         end
       end
 
