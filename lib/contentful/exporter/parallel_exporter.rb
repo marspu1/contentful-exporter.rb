@@ -92,6 +92,8 @@ module Contentful
       end
 
       def create_asset_file(asset)
+        filename = asset_file_name(asset)
+        return if !filename
 
         dirname = @config.assets_dir
         asset_path = File.join(dirname, 'files', filename)
