@@ -1,3 +1,17 @@
+GIT
+  remote: https://github.com/Instrument/contentful-importer.rb.git
+  revision: c20005fb8e2cdf0f3e778ca6984bb6975d80d9ab
+  specs:
+    contentful-importer (0.1.1)
+      activesupport (~> 4.1)
+      api_cache (~> 0.3.0)
+      contentful-management (~> 0.7.0)
+      escort (~> 0.4.0)
+      http (~> 0.8)
+      i18n (~> 0.6)
+      json-schema (~> 2.5.0)
+      multi_json (~> 1)
+
 PATH
   remote: .
   specs:
@@ -6,7 +20,7 @@ PATH
       api_cache (~> 0.3.0)
       contentful-management (~> 0.7.0)
       escort (~> 0.4.0)
-      http (~> 0.6)
+      http (~> 0.8)
       i18n (~> 0.6)
       json-schema (~> 2.5.0)
       multi_json (~> 1)
@@ -14,7 +28,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.2.1)
+    activesupport (4.2.3)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
@@ -22,20 +36,8 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.8)
     api_cache (0.3.0)
-    byebug (4.0.5)
-      columnize (= 0.9.0)
-    columnize (0.9.0)
-    contentful-importer (0.1.1)
-      activesupport (~> 4.1)
-      api_cache (~> 0.3.0)
-      contentful-management (~> 0.7.0)
-      escort (~> 0.4.0)
-      http (~> 0.6)
-      i18n (~> 0.6)
-      json-schema (~> 2.5.0)
-      multi_json (~> 1)
-    contentful-management (0.7.0)
-      http (~> 0.6)
+    contentful-management (0.7.1)
+      http (~> 0.8)
       multi_json (~> 1)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
@@ -45,7 +47,7 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     escort (0.4.0)
       nesty
-    http (0.8.9)
+    http (0.8.12)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
       http-form_data (~> 1.0.1)
@@ -55,29 +57,29 @@ GEM
     http-form_data (1.0.1)
     http_parser.rb (0.6.0)
     i18n (0.7.0)
-    json (1.8.2)
+    json (1.8.3)
     json-schema (2.5.1)
       addressable (~> 2.3.7)
-    minitest (5.6.1)
-    multi_json (1.11.0)
+    minitest (5.7.0)
+    multi_json (1.11.2)
     nesty (1.0.2)
     rake (10.4.2)
-    rspec (3.2.0)
-      rspec-core (~> 3.2.0)
-      rspec-expectations (~> 3.2.0)
-      rspec-mocks (~> 3.2.0)
-    rspec-core (3.2.3)
-      rspec-support (~> 3.2.0)
-    rspec-expectations (3.2.1)
+    rspec (3.3.0)
+      rspec-core (~> 3.3.0)
+      rspec-expectations (~> 3.3.0)
+      rspec-mocks (~> 3.3.0)
+    rspec-core (3.3.1)
+      rspec-support (~> 3.3.0)
+    rspec-expectations (3.3.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.2.0)
+      rspec-support (~> 3.3.0)
     rspec-its (1.1.0)
       rspec-core (>= 3.0.0)
       rspec-expectations (>= 3.0.0)
-    rspec-mocks (3.2.1)
+    rspec-mocks (3.3.1)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.2.0)
-    rspec-support (3.2.2)
+      rspec-support (~> 3.3.0)
+    rspec-support (3.3.0)
     safe_yaml (1.0.4)
     simplecov (0.10.0)
       docile (~> 1.1.0)
@@ -100,9 +102,8 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.6)
-  byebug
   contentful-exporter!
-  contentful-importer
+  contentful-importer!
   rake
   rspec (~> 3)
   rspec-its (~> 1.1.0)
