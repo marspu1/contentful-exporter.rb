@@ -162,7 +162,7 @@ module Contentful
                           {
                             :type => 'Location',
                             :lat => value.properties[:lat],
-                            :lon => value.properties[:lon]
+                            :lng => value.properties[:lon]
                           }
                         elsif value.is_a? Hash
                           parse_attributes_from_hash(value)
