@@ -1,6 +1,6 @@
 #PATH to data dump folder
-data_dir: PATH_TO_ALL_DATA
+data_dir: /Users/markspurgen/contentful-export
 
 #Contentful credentials - Define before exporting data from Contentful.
-access_token: ACCESS_TOKEN
-space_id: DEFINE_SPACE_ID_BEFORE_EXPORT
+access_token: b7c652669e7b2fdd49b38823e8ae49d9395c9fbdb4ec6f9dd227e63cb5cea53d
+space_id: 19nt8mdv4y6n
